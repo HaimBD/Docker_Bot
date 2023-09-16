@@ -3,7 +3,7 @@ from loguru import logger
 import os
 import time
 from telebot.types import InputFile
-
+import boto3
 
 class Bot:
 
@@ -71,7 +71,13 @@ class ObjectDetectionBot(Bot):
 
         if self.is_current_msg_photo(msg):
             photo_path = self.download_user_photo(msg)
+            #file_path = '/home/devops/docker/Docker_Bot/polybot/test2.txt'
+            s3 = boto3.client('s3')
+            bucket = 'hbd-bucket1'
+            object = 'yolo5/pic'
+            s3.upload_file(msg, 'hbd_bucket1', object)
 
-            # TODO upload the photo to S3
+
+
             # TODO send a request to the `yolo5` service for prediction
             # TODO send results to the Telegram end-user

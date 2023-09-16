@@ -7,6 +7,7 @@ import yaml
 from loguru import logger
 import os
 import boto3
+import pymongo
 
 images_bucket = os.environ['BUCKET_NAME']
 
@@ -25,9 +26,11 @@ def predict():
     # Receives a URL parameter representing the image to download from S3
     img_name = request.args.get('imgName')
 
-    # TODO download img_name from S3, store the local image path in original_img_path
-    #  The bucket name should be provided as an env var BUCKET_NAME.
-    original_img_path = ...
+    original_img_path = os.path.abspath('/home/devops/docker/Docker_Bot/yolo5/original_path')
+
+    s3_client = boto3.client('s3')
+
+    s3_client.download_file(images_bucket, img_name, original_img_path)
 
     logger.info(f'prediction: {prediction_id}/{original_img_path}. Download img completed')
 
@@ -46,6 +49,8 @@ def predict():
     # This is the path for the predicted image with labels
     # The predicted image typically includes bounding boxes drawn around the detected objects, along with class labels and possibly confidence scores.
     predicted_img_path = Path(f'static/data/{prediction_id}/{original_img_path}')
+
+    s3_client.upload_file(original_img_path+"/image1.jpeg", images_bucket, img_name)
 
     # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
@@ -72,6 +77,11 @@ def predict():
             'labels': labels,
             'time': time.time()
         }
+
+        mongo_server = pymongo.MongoClient("mongodb://localhost:27017/")
+        mongo_database = mongo_server["db"]
+        data_insert = prediction_summary
+        insert = data_insert.insert_one(data_insert)
 
         # TODO store the prediction_summary in MongoDB
 
