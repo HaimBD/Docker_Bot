@@ -32,6 +32,9 @@ def predict():
 
     s3_client.download_file(images_bucket, img_name, original_img_path)
 
+    # TODO download img_name from S3, store the local image path in original_img_path
+    #  The bucket name should be provided as an env var BUCKET_NAME.
+
     logger.info(f'prediction: {prediction_id}/{original_img_path}. Download img completed')
 
     # Predicts the objects in the image
@@ -79,9 +82,9 @@ def predict():
         }
 
         mongo_server = pymongo.MongoClient("mongodb://localhost:27017/")
-        mongo_database = mongo_server["db"]
-        data_insert = prediction_summary
-        insert = data_insert.insert_one(data_insert)
+        mongo_database = mongo_server["yolo5-db"]
+        mongo_collection = mongo_database["history"]
+        mongo_collection.insert_one(prediction_summary)
 
         # TODO store the prediction_summary in MongoDB
 
