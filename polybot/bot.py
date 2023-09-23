@@ -4,6 +4,8 @@ import os
 import time
 from telebot.types import InputFile
 import boto3
+import torch
+import requests
 
 class Bot:
 
@@ -71,7 +73,12 @@ class ObjectDetectionBot(Bot):
 
         if self.is_current_msg_photo(msg):
             photo_path = self.download_user_photo(msg)
+            bucket = 'hbd-bucket1'
+            object = 'yolo5-input/'
+            s3_client = boto3.client('s3')
+            s3_client.upload_file(photo_path, bucket, object)
 
-            # TODO upload the photo to S3
+            requests.get('http://localhost:8081')
             # TODO send a request to the `yolo5` service for prediction
+
             # TODO send results to the Telegram end-user

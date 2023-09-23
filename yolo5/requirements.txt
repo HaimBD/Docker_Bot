@@ -6,3 +6,4 @@ loguru
 
 pylint
 pytest
+torch
