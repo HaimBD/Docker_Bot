@@ -27,7 +27,7 @@ def predict():
     # Receives a URL parameter representing the image to download from S3
     img_name = request.args.get('imgName')
 
-    original_img_path = os.path.abspath('/home/devops/docker/Docker_Bot/yolo5/original_path')
+    original_img_path = os.path.abspath('/usr/src/app/street.jpeg')
 
     s3_client = boto3.client('s3')
 
@@ -52,9 +52,9 @@ def predict():
 
     # This is the path for the predicted image with labels
     # The predicted image typically includes bounding boxes drawn around the detected objects, along with class labels and possibly confidence scores.
-    predicted_img_path = Path(f'static/data/{prediction_id}/{original_img_path}')
+    predicted_img_path = Path(f'static/data/{prediction_id}/{img_name}')
     predicted_img = "yolo5-input/"+img_name+"_pred"
-    s3_client.upload_file(original_img_path, images_bucket, predicted_img)
+    s3_client.upload_file(predicted_img_path, images_bucket, predicted_img)
 
     # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
@@ -86,9 +86,9 @@ def predict():
         mongo_database = mongo_server["yolo5-db"]
         mongo_collection = mongo_database["history"]
         mongo_collection.insert_one(prediction_summary)
-
-        # TODO store the prediction_summary in MongoDB
         prediction_summary.pop('_id')
+        # TODO store the prediction_summary in MongoDB
+
         return prediction_summary
     else:
         return f'prediction: {prediction_id}/{original_img_path}. prediction result not found', 404
