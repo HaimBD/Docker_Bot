@@ -1,5 +1,6 @@
 FROM ultralytics/yolov5:latest-cpu
 WORKDIR /usr/src/app
+ENV BUCKET_NAME='hbd-bucket1'
 RUN pip install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt

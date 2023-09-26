@@ -77,7 +77,6 @@ class ObjectDetectionBot(Bot):
             else:
                 caption = 'no-caption'
             # TODO Upload the sent image to the S3 bucket
-
             bucket_name = os.environ['BUCKET']
             bucket_object = os.environ['BUCKET_FOLDER']
             object = caption+".jpeg"
@@ -86,8 +85,8 @@ class ObjectDetectionBot(Bot):
 
 
             # TODO send a request to the `yolo5` service for prediction
-            requests.post(f'http://localhost:8081/predict?imgName={object}')
-            destination = os.path.abspath(f'/home/devops/docker/Docker_Bot/polybot/photos/{caption+"_pred.jpeg"}')
+            requests.post(f'http://yolo5-web:8081/predict?imgName={object}')
+            destination = os.path.abspath(f'/usr/src/app{caption+"_pred.jpeg"}')
             time.sleep(30)
             s3_client.download_file(bucket_name, bucket_object+(object+"_pred.jpeg"), destination)
 
@@ -95,4 +94,4 @@ class ObjectDetectionBot(Bot):
             # TODO send results to the Telegram end-user
             #chat_id = '6146643575'
             chat_id = os.environ['CHAT_ID']
-            self.send_photo(chat_id, f'/home/devops/docker/Docker_Bot/polybot/photos/{caption+"_pred.jpeg"}')
+            self.send_photo(chat_id, f'/usr/src/app{caption+"_pred.jpeg"}')
