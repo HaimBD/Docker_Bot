@@ -27,7 +27,7 @@ def predict():
     # Receives a URL parameter representing the image to download from S3
     img_name = request.args.get('imgName')
 
-    original_img_path = os.path.abspath('/usr/src/app/street.jpeg')
+    original_img_path = os.path.abspath(f'/usr/src/app/{img_name}')
 
     s3_client = boto3.client('s3')
 
@@ -52,8 +52,8 @@ def predict():
 
     # This is the path for the predicted image with labels
     # The predicted image typically includes bounding boxes drawn around the detected objects, along with class labels and possibly confidence scores.
-    predicted_img_path = Path(f'static/data/{prediction_id}/{img_name}')
-    predicted_img = "yolo5-input/"+img_name+"_pred"
+    predicted_img_path = f'static/data/{prediction_id}/{img_name}'
+    predicted_img = "yolo5-input/"+img_name+"_pred.jpeg"
     s3_client.upload_file(predicted_img_path, images_bucket, predicted_img)
 
     # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
@@ -82,7 +82,7 @@ def predict():
             'time': time.time()
         }
 
-        mongo_server = pymongo.MongoClient("mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=myReplicaSet")
+        mongo_server = pymongo.MongoClient("mongodb://mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=myReplicaSet")
         mongo_database = mongo_server["yolo5-db"]
         mongo_collection = mongo_database["history"]
         mongo_collection.insert_one(prediction_summary)
