@@ -2,6 +2,7 @@ import flask
 from flask import request
 import os
 from bot import ObjectDetectionBot
+import requests
 
 app = flask.Flask(__name__)
 
@@ -19,6 +20,8 @@ def webhook():
     req = request.get_json()
     bot.handle_message(req['message'])
     return 'Ok'
+
+
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 import pymongo
 
+MONGO_URL = "mongodb+srv://{mongo_user}:{mongo_pass}@mongo.l74j5hs.mongodb.net/".format(mongo_user="mongo", mongo_pass="Pa55w.rd")
+
 prediction_summary = {
             'Test1': 'Test-One-One',
             'Test2': 'Test-Two-One',
@@ -8,7 +10,7 @@ prediction_summary = {
             'Test5': 'Test-Five-One'
         }
 
-mongo_server = pymongo.MongoClient("mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=myReplicaSet")
+mongo_server = pymongo.MongoClient(MONGO_URL)
 mongo_database = mongo_server["docker"]
 mongo_collection = mongo_database["Data"]
 mongo_collection.insert_one(prediction_summary)

@@ -92,6 +92,5 @@ class ObjectDetectionBot(Bot):
 
 
             # TODO send results to the Telegram end-user
-            #chat_id = '6146643575'
             chat_id = os.environ['CHAT_ID']
             self.send_photo(chat_id, f'/usr/src/app{caption+"_pred.jpeg"}')

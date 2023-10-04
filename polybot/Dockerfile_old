@@ -1,0 +1,16 @@
+FROM python:3.10-alpine
+WORKDIR /usr/src/app
+ENV PYTHONUNBUFFERED=1
+ENV TELEGRAM_TOKEN='6434843338:AAEwIju0jLpN1wHzH8ezBP5ZoMlD2zdU9ng'
+ENV TELEGRAM_APP_URL='https://55cc-2a10-8012-d-2a00-54dd-c26b-f4d1-8dd9.ngrok-free.app'
+ENV BUCKET='hbd-bucket1'
+ENV BUCKET_FOLDER='yolo5-input/'
+ENV CHAT_ID=6146643575
+EXPOSE 8443
+RUN pip install --upgrade pip
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python3", "app.py"]

@@ -11,6 +11,8 @@ import pymongo
 
 
 images_bucket = os.environ['BUCKET_NAME']
+MONGO_USER = os.environ['MONGO_USER']
+MONGO_PASS = os.environ['MONGO_PASS']
 
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
@@ -59,8 +61,8 @@ def predict():
     # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
     # Parse prediction labels and create a summary
-    pred_summary_path = Path(f'static/data/{prediction_id}/labels/{original_img_path.split(".")[0]}.txt')
-    if pred_summary_path.exists():
+    pred_summary_path = (f'static/data/{prediction_id}/labels/{img_name.split(".")[0]}.txt')
+    if pred_summary_path:
         with open(pred_summary_path) as f:
             labels = f.read().splitlines()
             labels = [line.split(' ') for line in labels]
@@ -82,7 +84,7 @@ def predict():
             'time': time.time()
         }
 
-        mongo_server = pymongo.MongoClient("mongodb://mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=myReplicaSet")
+        mongo_server = pymongo.MongoClient(f'mongodb+srv://{MONGO_USER}:{MONGO_PASS}@mongo.l74j5hs.mongodb.net/')
         mongo_database = mongo_server["yolo5-db"]
         mongo_collection = mongo_database["history"]
         mongo_collection.insert_one(prediction_summary)
