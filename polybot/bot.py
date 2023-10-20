@@ -86,11 +86,12 @@ class ObjectDetectionBot(Bot):
 
             # TODO send a request to the `yolo5` service for prediction
             requests.post(f'http://yolo5-web:8081/predict?imgName={object}')
-            destination = os.path.abspath(f'/usr/src/app{caption+"_pred.jpeg"}')
+            destination = os.path.abspath(f'/usr/src/app/{caption}+"_pred.jpeg"')
             time.sleep(30)
-            s3_client.download_file(bucket_name, bucket_object+(object+"_pred.jpeg"), destination)
+            s3_client.download_file(bucket_name, bucket_object+object+"_pred.jpeg", destination)
 
 
             # TODO send results to the Telegram end-user
-            chat_id = os.environ['CHAT_ID']
-            self.send_photo(chat_id, f'/usr/src/app{caption+"_pred.jpeg"}')
+            msg_from = msg['from']
+            chat_id = msg_from['id']
+            self.send_photo(chat_id, destination)

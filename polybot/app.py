@@ -2,7 +2,7 @@ import flask
 from flask import request
 import os
 from bot import ObjectDetectionBot
-import requests
+
 
 app = flask.Flask(__name__)
 

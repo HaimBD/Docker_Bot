@@ -1,6 +1,8 @@
 FROM ultralytics/yolov5:latest-cpu
 WORKDIR /usr/src/app
 ENV BUCKET_NAME='hbd-bucket1'
+ENV MONGO_USER='mongo'
+ENV MONGO_PASS='Pa55w.rd'
 EXPOSE 8081
 RUN pip install --upgrade pip
 COPY requirements.txt .

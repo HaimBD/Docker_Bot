@@ -61,7 +61,7 @@ def predict():
     # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
     # Parse prediction labels and create a summary
-    pred_summary_path = (f'static/data/{prediction_id}/labels/{img_name.split(".")[0]}.txt')
+    pred_summary_path = f'static/data/{prediction_id}/labels/{img_name.split(".")[0]}.txt'
     if pred_summary_path:
         with open(pred_summary_path) as f:
             labels = f.read().splitlines()

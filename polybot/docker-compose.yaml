@@ -28,7 +28,7 @@ services:
       TELEGRAM_TOKEN: $TELEGRAM_TOKEN
       BUCKET: $BUCKET
       BUCKET_FOLDER: $BUCKET_FOLDER
-      CHAT_ID: $CHAT_ID
+
     env_file:
       - .env
 networks:
