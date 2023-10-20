@@ -1,0 +1,7 @@
+.idea/
+polybot/AWS.key
+polybot/AWS.pem
+polybot/__pycache__/
+test.py
+venv/
+polybot/.env
