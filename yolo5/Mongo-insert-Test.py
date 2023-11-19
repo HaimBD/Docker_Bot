@@ -1,6 +1,6 @@
 import pymongo
 
-MONGO_URL = "mongodb+srv://{mongo_user}:{mongo_pass}@mongo.l74j5hs.mongodb.net/".format(mongo_user="mongo", mongo_pass="Pa55w.rd")
+MONGO_URL = "mongodb+srv://{mongo_user}:{mongo_pass}@mongo.l74j5hs.mongodb.net/".format(mongo_user="Username", mongo_pass="Password")
 
 prediction_summary = {
             'Test1': 'Test-One-One',
