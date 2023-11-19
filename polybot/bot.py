@@ -89,6 +89,7 @@ class ObjectDetectionBot(Bot):
             destination = os.path.abspath(f'/usr/src/app/{caption}+"_pred.jpeg"')
             time.sleep(30)
             s3_client.download_file(bucket_name, bucket_object+object+"_pred.jpeg", destination)
+            s3_client.delete_object(Bucket=bucket_name, Key=bucket_object+object+"_pred.jpeg")
 
 
             # TODO send results to the Telegram end-user

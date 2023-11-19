@@ -34,6 +34,7 @@ def predict():
     s3_client = boto3.client('s3')
 
     s3_client.download_file(images_bucket, img_name, original_img_path)
+    s3_client.delete_object(Bucket=images_bucket, Key=img_name)
 
     # TODO download img_name from S3, store the local image path in original_img_path
     #  The bucket name should be provided as an env var BUCKET_NAME.
