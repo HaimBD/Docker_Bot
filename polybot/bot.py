@@ -96,3 +96,7 @@ class ObjectDetectionBot(Bot):
             msg_from = msg['from']
             chat_id = msg_from['id']
             self.send_photo(chat_id, destination)
+            if os.path.exists(f'/usr/src/app/{caption}+"_pred.jpeg"'):
+                os.remove(f'/usr/src/app/{caption}+"_pred.jpeg"')
+            else:
+                pass

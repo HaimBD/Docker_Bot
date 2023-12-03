@@ -90,6 +90,14 @@ def predict():
         mongo_collection = mongo_database["history"]
         mongo_collection.insert_one(prediction_summary)
         prediction_summary.pop('_id')
+        if os.path.exists(f'/usr/src/app/static/data/{prediction_id}/{img_name}'):
+            os.remove(f'/usr/src/app/static/data/{prediction_id}/{img_name}')
+        else:
+            pass
+        if os.path.exists(f'/usr/src/app/{img_name}'):
+            os.remove(f'/usr/src/app/{img_name}')
+        else:
+            pass
         # TODO store the prediction_summary in MongoDB
 
         return prediction_summary

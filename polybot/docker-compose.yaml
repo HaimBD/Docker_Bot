@@ -2,7 +2,7 @@ version: "3.8"
 services:
   yolo5:
     container_name: yolo5-web
-    image: yolo5:1.1
+    image: yolo5:1.2
     networks:
       - docker_network
     ports:
@@ -17,7 +17,7 @@ services:
       - .env
   polybot:
     container_name: poly-web
-    image: poly:1.1
+    image: poly:1.2
     networks:
       - docker_network
     ports:
